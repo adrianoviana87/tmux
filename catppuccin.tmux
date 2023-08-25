@@ -312,7 +312,7 @@ main() {
   local status_connect_separator=$(get_tmux_option "@catppuccin_status_connect_separator" "yes")
   local status_fill=$(get_tmux_option "@catppuccin_status_fill" "icon")
 
-  local status_modules=$(get_tmux_option "@catppuccin_status_modules" "application session")
+  local status_modules=$(get_tmux_option "@catppuccin_status_modules" "git_info application session")
   local loaded_modules=$( load_modules "$status_modules")
 
   set status-left ""
