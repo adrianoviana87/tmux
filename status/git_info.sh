@@ -1,7 +1,7 @@
 show_git_info() {
   local index=$1
   local icon=$(get_tmux_option "@catppuccin_git_info_icon" "")
-  local color=$(get_tmux_option "@catppuccin_git_info_color" "$thm_pink")
+  local color=$(get_tmux_option "@catppuccin_git_info_color" "$thm_git")
   local pwd=$(tmux display-message -p -F "#{pane_current_path}")
   # local gitmux_output=$(gitmux -cfg ~/tmux-files/.gitmux.conf $pwd)
   # if gitmux_output has no content, then there is no git repo

@@ -66,6 +66,8 @@ build_window_format() {
   local background=$3
   local text=$4
   local fill=$5
+  local text_fg=$6
+  local text_bg=$7
 
   if [ "$window_status_enable" = "yes" ]
   then
@@ -75,11 +77,11 @@ build_window_format() {
 
   if [ "$fill" = "none" ]
   then
-    local show_left_separator="#[fg=$thm_gray,bg=$thm_bg,nobold,nounderscore,noitalics]$window_left_separator"
-    local show_number="#[fg=$thm_fg,bg=$thm_gray]$number"
-    local show_middle_separator="#[fg=$thm_fg,bg=$thm_gray,nobold,nounderscore,noitalics]$window_middle_separator"
-    local show_text="#[fg=$thm_fg,bg=$thm_gray]$text"
-    local show_right_separator="#[fg=$thm_gray,bg=$thm_bg]$window_right_separator"
+    local show_left_separator="#[fg=$thm_window_left_separator_fg,bg=$thm_bg,nobold,nounderscore,noitalics]$window_left_separator"
+    local show_number="#[fg=$thm_fg,bg=$window_number_bg]$number"
+    local show_middle_separator="#[fg=$thm_fg,bg=$window_middle_separator_bg,nobold,nounderscore,noitalics]$window_middle_separator"
+    local show_text="#[fg=$text_fg,bg=$text_bg]$text"
+    local show_right_separator="#[fg=$window_right_separator_fg,bg=$thm_bg]$window_right_separator"
 
   fi
 
@@ -97,7 +99,7 @@ build_window_format() {
   then
     local show_number="#[fg=$background,bg=$color]$number"
     local show_middle_separator="#[fg=$color,bg=$background,nobold,nounderscore,noitalics]$window_middle_separator"
-    local show_text="#[fg=$thm_fg,bg=$background]$text"
+    local show_text="#[fg=$text_fg,bg=$text_bg]$text"
 
     if [ "$window_number_position" = "right" ]
     then
@@ -136,33 +138,33 @@ build_status_module() {
 
   if [ "$status_fill" = "icon" ]
   then
-    local show_left_separator="#[fg=$color,bg=$thm_gray,nobold,nounderscore,noitalics]$status_left_separator"
+    local show_left_separator="#[fg=$color,bg=$thm_status_left_separator_bg,nobold,nounderscore,noitalics]$status_left_separator"
 
-    local show_icon="#[fg=$thm_bg,bg=$color,nobold,nounderscore,noitalics]$icon "
-    local show_text="#[fg=$thm_fg,bg=$thm_gray] $text"
+    local show_icon="#[fg=$color,bg=$thm_bg,nobold,nounderscore,noitalics]$icon "
+    local show_text="#[fg=$thm_fg,bg=$thm_status_text_bg] $text"
 
-    local show_right_separator="#[fg=$thm_gray,bg=$thm_bg,nobold,nounderscore,noitalics]$status_right_separator"
+    local show_right_separator="#[fg=$thm_status_right_separator_fg,bg=$thm_bg,nobold,nounderscore,noitalics]$status_right_separator"
 
     if [ "$status_connect_separator" = "yes" ]
     then
-      local show_left_separator="#[fg=$color,bg=$thm_gray,nobold,nounderscore,noitalics]$status_left_separator"
-      local show_right_separator="#[fg=$thm_gray,bg=$thm_gray,nobold,nounderscore,noitalics]$status_right_separator"
+      local show_left_separator="#[fg=$color,bg=$thm_status_left_separator_bg,nobold,nounderscore,noitalics]$status_left_separator"
+      local show_right_separator="#[fg=$thm_status_right_separator_fg,bg=$thm_gray,nobold,nounderscore,noitalics]$status_right_separator"
 
     else
       local show_left_separator="#[fg=$color,bg=$thm_bg,nobold,nounderscore,noitalics]$status_left_separator"
-      local show_right_separator="#[fg=$thm_gray,bg=$thm_bg,nobold,nounderscore,noitalics]$status_right_separator"
+      local show_right_separator="#[fg=$thm_status_right_separator_fg,bg=$thm_bg,nobold,nounderscore,noitalics]$status_right_separator"
     fi
 
   fi
 
   if [ "$status_fill" = "all" ]
   then
-    local show_left_separator="#[fg=$color,bg=$thm_gray,nobold,nounderscore,noitalics]$status_left_separator"
+    local show_left_separator="#[fg=$color,bg=$thm_status_left_separator_bg,nobold,nounderscore,noitalics]$status_left_separator"
 
     local show_icon="#[fg=$thm_bg,bg=$color,nobold,nounderscore,noitalics]$icon "
     local show_text="#[fg=$thm_bg,bg=$color]$text"
 
-    local show_right_separator="#[fg=$color,bg=$thm_gray,nobold,nounderscore,noitalics]$status_right_separator"
+    local show_right_separator="#[fg=$color,bg=$thm_status_right_separator_fg,nobold,nounderscore,noitalics]$status_right_separator"
 
     if [ "$status_connect_separator" = "yes" ]
     then
@@ -180,7 +182,7 @@ build_status_module() {
   then
     if [ "$status_connect_separator" = "yes" ]
     then
-      local show_right_separator="#[fg=$thm_gray,bg=$color,nobold,nounderscore,noitalics]$status_right_separator"
+      local show_right_separator="#[fg=$thm_status_right_separator_fg,bg=$color,nobold,nounderscore,noitalics]$status_right_separator"
     else
       local show_right_separator="#[fg=$thm_bg,bg=$color,nobold,nounderscore,noitalics]$status_right_separator"
     fi
@@ -280,12 +282,12 @@ main() {
   set status-right-length "100"
 
   # messages
-  set message-style "fg=${thm_cyan},bg=${thm_gray},align=centre"
-  set message-command-style "fg=${thm_cyan},bg=${thm_gray},align=centre"
+  set message-style "fg=${thm_message_style_fg},bg=${thm_message_style_bg},align=centre"
+  set message-command-style "fg=${thm_message_command_style_fg},bg=${thm_message_command_style_bg},align=centre"
 
   # panes
-  set pane-border-style "fg=${thm_gray}"
-  set pane-active-border-style "fg=${thm_blue}"
+  set pane-border-style "fg=${thm_pane_border_style_fg}"
+  set pane-active-border-style "fg=${thm_active_border_style_fg}"
 
   # windows
   setw window-status-activity-style "fg=${thm_fg},bg=${thm_bg},none"
@@ -295,8 +297,8 @@ main() {
   # --------=== Statusline
 
   local window_left_separator=$(get_tmux_option "@catppuccin_window_left_separator" "█")
-  local window_right_separator=$(get_tmux_option "@catppuccin_window_right_separator" "█")
-  local window_middle_separator=$(get_tmux_option "@catppuccin_window_middle_separator" "█ ")
+  local window_right_separator=$(get_tmux_option "@catppuccin_window_right_separator" " ")
+  local window_middle_separator=$(get_tmux_option "@catppuccin_window_middle_separator" "█")
   local window_number_position=$(get_tmux_option "@catppuccin_window_number_position" "left") # right, left
   local window_status_enable=$(get_tmux_option "@catppuccin_window_status_enable" "no") # right, left
 
@@ -306,8 +308,8 @@ main() {
   setw window-status-format "$window_format"
   setw window-status-current-format "$window_current_format"
 
-  local status_left_separator=$(get_tmux_option "@catppuccin_status_left_separator" "")
-  local status_right_separator=$(get_tmux_option "@catppuccin_status_right_separator" "█")
+  local status_left_separator=$(get_tmux_option "@catppuccin_status_left_separator" "")
+  local status_right_separator=$(get_tmux_option "@catppuccin_status_right_separator" "")
   local status_right_separator_inverse=$(get_tmux_option "@catppuccin_status_right_separator_inverse" "no")
   local status_connect_separator=$(get_tmux_option "@catppuccin_status_connect_separator" "yes")
   local status_fill=$(get_tmux_option "@catppuccin_status_fill" "icon")
@@ -320,8 +322,8 @@ main() {
 
   # --------=== Modes
   #
-  setw clock-mode-colour "${thm_blue}"
-  setw mode-style "fg=${thm_pink} bg=${thm_black4} bold"
+  setw clock-mode-colour "${thm_clock_mode_colour}"
+  setw mode-style "fg=${thm_mode_style_fg} bg=${thm_mode_style_bg} bold"
 
   tmux "${tmux_commands[@]}"
 }
