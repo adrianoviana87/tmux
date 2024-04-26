@@ -1,6 +1,6 @@
 show_current_directory() {
   local index=$1
-  local icon=$(get_tmux_option "@catppuccin_application_icon" "CWD")
+  local icon=$(get_tmux_option "@catppuccin_application_icon" "")
   local color=$(get_tmux_option "@catppuccin_application_color" "$thm_current_directory")
   local text=$(get_tmux_option "@catppuccin_application_text" "#{b:pane_current_path}")
 
